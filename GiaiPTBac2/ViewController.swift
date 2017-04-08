@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController,UITextFieldDelegate {
     
     
     @IBOutlet weak var txt_HeSoa: UITextField!
@@ -33,6 +33,10 @@ class ViewController: UIViewController {
         txt_X1.isHidden = true
         txt_X2.isHidden = true
         lb_KetQua.isHidden = true
+        //
+        self.txt_HeSoa.delegate = self;
+        self.txt_HeSob.delegate = self;
+        self.txt_HeSoc.delegate = self;
         //textFieldDidChange()
         //GiaiPTBac2()
     }
@@ -43,7 +47,7 @@ class ViewController: UIViewController {
     }
     //Validation
     func    textFieldDidChange() -> Bool{
-        if txt_HeSoa.text == "" || txt_HeSob.text == "" || txt_HeSoc.text == "" {
+        if txt_HeSoa.text == "" || txt_HeSob.text == "" || txt_HeSoc.text == "" || txt_HeSoa.text == "." || txt_HeSob.text == "." || txt_HeSoc.text == "." || txt_HeSoa.text == "" || txt_HeSob.text == "" || txt_HeSoc.text == "" {
             return false
         } else {
             return true
@@ -106,11 +110,11 @@ class ViewController: UIViewController {
     }
     @IBAction func actGiai(_ sender: Any) {
         if(textFieldDidChange() == true){
-            lb_X1.isHidden = true
-            lb_X2.isHidden = true
-            txt_X1.isHidden = true
-            txt_X2.isHidden = true
-            lb_KetQua.isHidden = true
+            //lb_X1.isHidden = true
+            //lb_X2.isHidden = true
+            //txt_X1.isHidden = true
+            //txt_X2.isHidden = true
+            //lb_KetQua.isHidden = true
             GiaiPTBac2()
         }
         else{
@@ -124,7 +128,22 @@ class ViewController: UIViewController {
         txt_HeSoa.text = ""
         txt_HeSob.text = ""
         txt_HeSoc.text = ""
+        lb_X1.isHidden = true
+        lb_X2.isHidden = true
+        txt_X1.isHidden = true
+        txt_X2.isHidden = true
+        lb_KetQua.isHidden = true
+        
     }
+    //Validation
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        let aSet = NSCharacterSet(charactersIn:"0123456789-.").inverted
+        let compSepByCharInSet = string.components(separatedBy: aSet)
+        let numberFiltered = compSepByCharInSet.joined(separator: "")
+        return string == numberFiltered
+    }
+    
 
 
 }
